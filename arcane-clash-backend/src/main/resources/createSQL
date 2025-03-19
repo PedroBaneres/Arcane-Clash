@@ -1,0 +1,33 @@
+DROP DATABASE IF EXISTS arcane_clash;
+CREATE DATABASE arcane_clash;
+
+USE arcane_clash;
+
+
+
+CREATE TABLE factions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+INSERT INTO factions (name) VALUES 
+('KINGDOM'),
+('WILD'),
+('ARCANE'),
+('UNDEAD');
+
+
+CREATE TABLE cards (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    goldCost INT NOT NULL,
+    manaCost INT NOT NULL,
+    faction_id INT DEFAULT NULL, 
+	heal INT NOT NULL,
+    gold INT NOT NULL,
+    attack INT NOT NULL,
+    mana INT NOT NULL,
+    ability VARCHAR(255) DEFAULT NULL,
+    comboAbility VARCHAR(255) DEFAULT NULL,
+    FOREIGN KEY (faction_id) REFERENCES factions(id)
+);

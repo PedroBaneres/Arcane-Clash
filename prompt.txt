@@ -1,0 +1,542 @@
+my idea is: Its a deck similar to star realms, these are the cards:
+-- Cards for KINGDOM Faction (id = 1)
+INSERT INTO cards (name, goldCost, manaCost, faction_id, gold, attack, mana, heal, ability, comboAbility) VALUES
+('Knight', 4, 0, 1, 3, 3, 0, 3, NULL, NULL),
+('Archer', 1, 0, 1, 0, 3, 0, 0, NULL, NULL),
+('Castle', 5, 0, 1, 3, 0, 0, 5, NULL, NULL),
+('Squire', 1, 0, 1, 2, 1, 0, 0, NULL, NULL),
+('Knight', 4, 0, 1, 3, 3, 0, 3, NULL, NULL),
+('Archer', 1, 0, 1, 0, 3, 0, 0, NULL, NULL),
+('Castle', 5, 0, 1, 3, 0, 0, 5, NULL, NULL),
+('Squire', 1, 0, 1, 2, 1, 0, 0, NULL, NULL),
+('Knight', 4, 0, 1, 3, 3, 0, 3, NULL, NULL),
+('Archer', 1, 0, 1, 0, 3, 0, 0, NULL, NULL);
+
+-- Cards for WILD Faction (id = 2)
+INSERT INTO cards (name, goldCost, manaCost, faction_id, gold, attack, mana, heal, ability, comboAbility) VALUES
+('Bear', 4, 0, 2, 3, 5, 0, 0, NULL, NULL),
+('Wolf', 3, 0, 2, 0, 3, 0, 0, NULL, NULL),
+('Tree', 0, 4, 2, 0, 6, 0, 6, NULL, NULL),
+('Wild Magic', 3, 0, 2, 0, 2, 2, 2, NULL, NULL),
+('Bear', 4, 0, 2, 3, 5, 0, 0, NULL, NULL),
+('Wolf', 3, 0, 2, 0, 3, 0, 0, NULL, NULL),
+('Tree', 0, 4, 2, 0, 6, 0, 6, NULL, NULL),
+('Wild Magic', 3, 0, 2, 0, 2, 2, 2, NULL, NULL),
+('Bear', 4, 0, 2, 3, 5, 0, 0, NULL, NULL),
+('Wolf', 3, 0, 2, 0, 3, 0, 0, NULL, NULL);
+
+-- Cards for ARCANE Faction (id = 3)
+INSERT INTO cards (name, goldCost, manaCost, faction_id, gold, attack, mana, heal, ability, comboAbility) VALUES
+('Sorcerer', 2, 0, 3, 0, 2, 2, 0, NULL, NULL),
+('Wizard', 2, 4, 3, 0, 2, 4, 2, NULL, NULL),
+('Arcane Power', 0, 5, 3, 0, 10, 0, 0, NULL, NULL),
+('Mage Tower', 5, 0, 3, 2, 0, 3, 3, NULL, NULL),
+('Sorcerer', 2, 0, 3, 0, 2, 2, 0, NULL, NULL),
+('Wizard', 2, 4, 3, 0, 2, 4, 2, NULL, NULL),
+('Arcane Power', 0, 5, 3, 0, 10, 0, 0, NULL, NULL),
+('Mage Tower', 5, 0, 3, 2, 0, 3, 3, NULL, NULL),
+('Sorcerer', 2, 0, 3, 0, 2, 2, 0, NULL, NULL),
+('Wizard', 2, 4, 3, 0, 2, 4, 2, NULL, NULL);
+
+-- Cards for UNDEAD Faction (id = 4)
+INSERT INTO cards (name, goldCost, manaCost, faction_id, gold, attack, mana, heal, ability, comboAbility) VALUES
+('Zombie', 2, 0, 4, 0, 3, 0, 3, NULL, NULL),
+('Ghost', 3, 0, 4, 0, 2, 2, 0, NULL, NULL),
+('Necromancer', 5, 4, 4, 0, 5, 2, 5, NULL, NULL),
+('Graveyard', 4, 0, 4, 3, 5, 0, 0, NULL, NULL),
+('Zombie', 2, 0, 4, 0, 3, 0, 3, NULL, NULL),
+('Ghost', 3, 0, 4, 0, 2, 2, 0, NULL, NULL),
+('Necromancer', 5, 4, 4, 0, 5, 2, 5, NULL, NULL),
+('Graveyard', 4, 0, 4, 3, 5, 0, 0, NULL, NULL),
+('Zombie', 2, 0, 4, 0, 3, 0, 3, NULL, NULL),
+('Ghost', 3, 0, 4, 0, 2, 2, 0, NULL, NULL);
+
+So for now no abillities.
+
+Now how i want the game to work.
+
+First each player gets a personal deck consistent of 10 cards. This 10 cards are 8 peasents and 2 scouts. basic units , peasents give 1 gold (so gold is 1 and rest attributes is 0 ) and scouts give 1 attack. This deck is shuffled.
+
+Then the tradezone is made, a deck consistent of the 40 cards in the database. the tradezone has this deck and 5 face up cards. Whenever a card is "bought" its replaced by another card in the deck.
+
+So now before starting player that goes first draws 3 cards from his personal deck, and player that goes second draws 5 from his. Player 1 turn begins.
+
+How turns work:
+
+Player whose turn is can play any card inm his hand, their cards give heal, gold, mana and attack.(we ignore abillities for now).
+
+whenever he play a card he gets whatever resource he gets. He now can buy any card from the tradezone he can afford. When he buys a card his resources are paid and this card is added to his discard pile. Then whenever he ends the turn he will do several things:
+
+Deal damage to opponent equal to his attack power.
+Heal equal to his heal power.
+Set his attack, heal and gold to 0, (mana is the only resource that remains)
+Send all his cards (both still in hand and the ones played this turn) to his discard pile. 
+
+Draw 5 cards, if he cant draw 5 cards he will shuffle his discard pile to his deck and draw from there (this also happens if i draw 4 cards from my deck, deck is emptied, so discard pile gets shuffled and i draw one more to get my 5 total).
+
+Player 2 begins his turn. 
+
+Game ends when lifepoints of any player reach 0
+
+Notice this is very similar to star realms. Try to implement my main method so i can play from console (i will be both players)
+please answer with a java solution, note this is what i have right now:
+
+package com.arcaneclash.arcane_clash_backend.model;
+
+import java.util.function.Consumer;
+
+public class Card {
+    
+    private String name;
+    private int goldCost;
+    private int manaCost;
+    private Faction faction;  
+    private int gold;
+    private int attack;
+    private int mana;
+    private int heal;
+    private boolean usedAbility;
+    private boolean usedCombo;
+    private Consumer<Player> ability;
+    private Consumer<Player> comboAbility;
+    private int factionRequirement;
+
+    
+    public Card(String name, int goldCost, int manaCost, Faction faction, 
+                int gold, int attack, int mana,
+                Consumer<Player> ability, Consumer<Player> comboAbility) {
+        this.name = name;
+        this.goldCost = goldCost;
+        this.manaCost = manaCost;
+        this.faction = faction;  
+        this.gold = gold;
+        this.attack = attack;
+        this.mana = mana;
+        this.ability = ability;
+        this.comboAbility = comboAbility;
+    }
+
+   
+    public Card( String name, int goldCost, int manaCost, int factionId, int heal, int gold, int attack,
+                int mana, String ability, String comboAbility) {
+        this.name = name;
+        this.goldCost = goldCost;
+        this.manaCost = manaCost;
+        this.faction = Faction.values()[factionId];  // Convert factionId to Faction enum
+        this.heal = heal;
+        this.gold = gold;
+        this.attack = attack;
+        this.mana = mana;
+
+        // Ability and ComboAbility as Strings will need to be converted to Consumers if needed
+        this.ability = ability != null ? player -> System.out.println(ability) : null;  // Example placeholder
+        this.comboAbility = comboAbility != null ? player -> System.out.println(comboAbility) : null;  // Example placeholder
+    }
+
+    public void play(Player player) {
+        player.addGold(gold);
+        player.addMana(mana);
+        player.increaseAttack(attack);
+    }
+
+    public void activateAbility(Player player) {
+        if (ability != null && !usedAbility) {
+            ability.accept(player);
+            this.usedAbility = true;
+        }
+        if (comboAbility != null && !usedCombo) {
+            if (player.hasFactionCards(this.faction, this.factionRequirement)) {
+                comboAbility.accept(player);
+                this.usedCombo = true;
+            }
+        }
+    }
+
+    // Getters and Setters
+    public String getName() { return name; }
+    public int getGoldCost() { return goldCost; }
+    public int getManaCost() { return manaCost; }
+    public Faction getFaction() { return faction; }  
+    public int getGold() { return gold; }
+    public int getAttack() { return attack; }
+    public int getMana() { return mana; }
+    public int getHeal() { return heal; }
+
+    public void setName(String name) { this.name = name; }
+    public void setGoldCost(int goldCost) { this.goldCost = goldCost; }
+    public void setManaCost(int manaCost) { this.manaCost = manaCost; }
+    public void setFaction(Faction faction) { this.faction = faction; }  
+    public void setGold(int gold) { this.gold = gold; }
+    public void setAttack(int attack) { this.attack = attack; }
+    public void setMana(int mana) { this.mana = mana; }
+    public void setHeal(int heal) { this.heal = heal; }
+}
+package com.arcaneclash.arcane_clash_backend.model;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DatabaseConnector {
+    private static final String DB_URL = "jdbc:mysql://192.168.56.101/arcane_clash";
+    private static final String USERNAME = "admin00";
+    private static final String PASSWORD = "alumno";
+
+    // Method to establish database connection
+    public Connection getDatabaseConnection() throws SQLException {
+        return DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+    }
+
+    // Method to retrieve all the cards from the database
+    public List<Card> getAllCards() {
+        List<Card> cards = new ArrayList<>();
+        String query = "SELECT * FROM cards";
+
+        try (Connection connection = getDatabaseConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int goldCost = resultSet.getInt("goldCost");
+                int manaCost = resultSet.getInt("manaCost");
+                int factionId = resultSet.getInt("faction_id");
+                int heal = resultSet.getInt("heal");
+                int gold = resultSet.getInt("gold");
+                int attack = resultSet.getInt("attack");
+                int mana = resultSet.getInt("mana");
+                String ability = resultSet.getString("ability");
+                String comboAbility = resultSet.getString("comboAbility");
+
+                // Create card object and add it to the list
+                Card card = new Card(  name, goldCost, manaCost, factionId, heal, gold, attack, mana, ability, comboAbility);
+                cards.add(card);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cards;
+    }
+}
+package com.arcaneclash.arcane_clash_backend.model;
+
+import java.util.List;
+
+public class Game {
+    private Player player1;
+    private Player player2;
+    private TurnManager turnManager;
+    private TradeZone tradeZone;
+
+    public Game(Player player1, Player player2, List<Card> deck) {
+        this.player1 = player1;
+        this.player2 = player2;
+        this.tradeZone = new TradeZone(deck);  
+        this.turnManager = new TurnManager(this);
+    }
+
+    public void startGame() {
+        
+        player1.drawCard();  
+        player1.drawCard();
+        player1.drawCard();
+
+        player2.drawCard();  
+        player2.drawCard();
+        player2.drawCard();
+        player2.drawCard();
+        player2.drawCard();
+        player2.drawCard();
+
+        turnManager.startTurn();  // Start the first player's turn
+    }
+
+    public void endGame(Player winner) {
+        // Logic to end the game, determine the winner
+        System.out.println(winner.getName() + " wins!");
+    }
+
+    public TradeZone getTradeZone() {
+        return tradeZone;
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+}
+
+
+
+package com.arcaneclash.arcane_clash_backend.model;
+
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+
+
+public class Player {
+    public int lifePoints = 40;
+    private String name;
+    private int gold;
+    private int mana;
+    private int attack;
+    private int heal;
+    private List<Card> discardPile;
+    private List<Card> deck;
+    private List<Card> hand;
+    private List<Card> cardsInPlay;
+
+    public Player(String name) {
+        this.name = name;
+        this.gold = 0;
+        this.mana = 0;
+        this.attack = 0;
+        this.heal=0;
+        this.deck = new ArrayList<>();
+        this.discardPile = new ArrayList<>();
+        this.hand = new ArrayList<>();
+        this.cardsInPlay = new ArrayList<>();
+    }
+
+   
+    public void addGold(int amount) {
+        this.gold += amount;
+    }
+
+    public void addMana(int amount) {
+        this.mana += amount;
+    }
+
+    public void increaseAttack(int amount) {
+        this.attack += amount;
+    }
+public void increaseHeal(int amount){
+    this.heal += amount;
+}
+    public void addCardToDiscard( Card card){
+    discardPile.add(card);
+}
+    public void addCardToDeck(Card card) {
+        deck.add(card);
+    }
+
+    public void drawCard() {
+    if (!deck.isEmpty()) {
+        // Draw normally
+        Card drawnCard = deck.remove(0);
+        hand.add(drawnCard);
+    } else if (!discardPile.isEmpty()) {
+        
+        // Shuffles discard pile into deck and draw again
+        deck.addAll(discardPile);
+        discardPile.clear();
+        Collections.shuffle(deck);
+        drawCard(); 
+    } else {
+        // If discard is empty we dont draw anymore, this prevents looping, not implemented yet
+        
+    }
+}
+
+    public void playCard(Card card) {
+        if (hand.contains(card)) {
+            hand.remove(card);
+            card.play(this); 
+            cardsInPlay.add(card);
+        } 
+    }
+
+    public boolean hasFactionCards(Faction faction, int requiredCount) {
+        long count = cardsInPlay.stream()
+                                .filter(card -> card.getFaction() == faction)  // Filter cards by faction
+                                .count();  // Count the number of matching cards
+        return count >= requiredCount;  // Check if we have at least requiredCount cards
+    }
+    public void attack (Player player){
+        player.lifePoints = player.lifePoints - this.attack;
+        this.setAttack(0);    }
+        public void heal(){
+            this.lifePoints = this.lifePoints + this.heal;
+            this.setHeal(0);    }
+        
+
+    
+    public String getName() { return name; }
+    public int getGold() { return gold; }
+    public int getMana() { return mana; }
+    public int getAttack() { return attack; }
+    public List<Card> getDeck() { return deck; }
+    public List<Card> getHand() { return hand; }
+    public List<Card> getCardsInPlay() { return cardsInPlay; }
+    public void setAttack(int attack){this.attack = attack;}
+    public void setHeal(int heal){this.heal = heal;}
+    public void setGold(int gold){this.gold = gold;}
+    public void setMana(int mana){this.mana = mana;}
+}
+package com.arcaneclash.arcane_clash_backend.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TradeZone {
+
+    private List<Card> cardsInMiddle;  
+    private List<Card> deck;  
+
+    public TradeZone(List<Card> deck) {
+        this.cardsInMiddle = new ArrayList<>();
+        this.deck = deck;
+        initializeTradeZone();
+    }
+
+    // Initialize the trade zone with 5 cards from the deck
+    private void initializeTradeZone() {
+        for (int i = 0; i < 5; i++) {
+            if (!deck.isEmpty()) {
+                cardsInMiddle.add(deck.remove(0));  // Add a card from the deck to the middle
+            }
+        }
+    }
+
+
+    public boolean buyCard(Player player, Card cardToBuy) {
+    
+        if (cardsInMiddle.contains(cardToBuy)) {
+            // Check if the player can afford the card
+            if (player.getGold() >= cardToBuy.getGoldCost() && player.getMana() >= cardToBuy.getManaCost()) {
+                // Deduct the resources
+                player.addGold(-cardToBuy.getGoldCost());
+                player.addMana(-cardToBuy.getManaCost());
+
+                // Add the card to the player's discard pile
+                player.addCardToDiscard(cardToBuy);
+
+                // Replace the card in the middle with a new card from the deck
+                replaceCardInMiddle(cardToBuy);
+
+                return true;  
+            }
+        }
+        return false;  
+    }
+
+
+    private void replaceCardInMiddle(Card cardToReplace) {
+        if (!deck.isEmpty()) {
+            int index = cardsInMiddle.indexOf(cardToReplace);
+            if (index != -1) {
+                cardsInMiddle.set(index, deck.remove(0));  // Replace the card in the middle with a new one
+            }
+        }
+    }
+package com.arcaneclash.arcane_clash_backend.model;
+
+public class TurnManager {
+    private Player currentPlayer;
+    private Player opponent;
+    private Game game;
+
+    public TurnManager(Game game) {
+        this.game = game;
+    }
+
+    // Start a new turn for the current player
+    public void startTurn() {
+        System.out.println(currentPlayer.getName() + "'s turn begins!");
+
+        
+        
+
+        
+    }
+
+    // End the current player's turn
+    public void endTurn() {
+      
+        opponent.lifePoints -= currentPlayer.getAttack();
+        
+
+        currentPlayer.setAttack(0); 
+        currentPlayer.setGold(0);   
+        currentPlayer.getCardsInPlay().clear();  
+        currentPlayer.getHand().clear();  
+        
+        for (int i = 0; i < 5; i++) {
+            currentPlayer.drawCard();
+        }
+        
+        switchTurn();
+
+        startTurn();
+    }
+
+    private void switchTurn() {
+        Player temp = currentPlayer;
+        currentPlayer = opponent;
+        opponent = temp;
+    }
+
+    public void setPlayers(Player player1, Player player2) {
+        this.currentPlayer = player1;
+        this.opponent = player2;
+    }
+}
+
+
+
+    public List<Card> getCardsInMiddle() {
+        return cardsInMiddle;
+    }
+
+    public List<Card> getDeck() {
+        return deck;
+    }
+}
+package com.arcaneclash.arcane_clash_backend;
+
+import com.arcaneclash.arcane_clash_backend.model.Player;
+
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // Initialize the players
+        Player player1 = new Player("Player 1");
+        Player player2 = new Player("Player 2");
+
+        // Fetch all cards from the database
+        List<Card> cards = DatabaseConnector.getAllCards();
+
+        // Initialize the trade zone with the cards
+        TradeZone tradezone = new TradeZone(cards);
+
+        // Print player stats
+        printPlayerStats(player1);
+        printPlayerStats(player2);
+
+        // Other game setup code (starting the game, etc.)
+    }
+
+    private static void printPlayerStats(Player player) {
+        System.out.println(player.getName() + " Stats:");
+        System.out.println("Health: " + player.getLifepoints());
+        System.out.println("Attack: " + player.getAttack());
+        System.out.println("Gold: " + player.getGold());
+        System.out.println("Mana: " + player.getMana());
+        System.out.println("Heal: " + player.getHeal());
+        System.out.println();
+    }
+}
+
+
+make my main work 
